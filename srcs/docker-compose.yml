@@ -24,8 +24,8 @@ services:
       dockerfile: requirements/mariadb/Dockerfile
       args:
         DB_NAME: ${DB_NAME}
-        DB_USER: ${DB_USER}
-        DB_PASS: ${DB_PASS}
+        USER_DB: ${USER_DB}
+        PASS_DB: ${PASS_DB}
         DB_ROOT: ${DB_ROOT}
     container_name: mariadb
     ports:
@@ -42,8 +42,8 @@ services:
       dockerfile: requirements/wordpress/Dockerfile
       args:
         DB_NAME: ${DB_NAME}
-        DB_USER: ${DB_USER}
-        DB_PASS: ${DB_PASS}
+        USER_DB: ${USER_DB}
+        PASS_DB: ${PASS_DB}
     container_name: wordpress
     depends_on:
       - mariadb
@@ -67,8 +67,8 @@ services:
       context: .
       dockerfile: requirements/bonus/ftp/Dockerfile
       args:
-        FTP_USR: ${FTP_USR}
-        FTP_PWD: ${FTP_PWD}
+        USER_FTP: ${USER_FTP}
+        PASS_FTP: ${PASS_FTP}
     container_name: ftp
     ports:
       - "21:21"

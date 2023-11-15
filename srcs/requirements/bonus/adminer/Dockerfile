@@ -1,27 +1,27 @@
 FROM alpine:3.16
 
-ARG PHP_VERSION=8
+ARG V_PHP=8
 
 RUN apk update && apk upgrade && apk add --no-cache \
-    php${PHP_VERSION} \
-    php${PHP_VERSION}-common \
-    php${PHP_VERSION}-session \
-    php${PHP_VERSION}-iconv \
-    php${PHP_VERSION}-gd \
-    php${PHP_VERSION}-curl \
-    php${PHP_VERSION}-xml \
-    php${PHP_VERSION}-mysqli \
-    php${PHP_VERSION}-imap \
-    php${PHP_VERSION}-cgi \
-    php${PHP_VERSION}-pdo \
-    php${PHP_VERSION}-pdo_mysql \
-    php${PHP_VERSION}-soap \
-    php${PHP_VERSION}-posix \
-    php${PHP_VERSION}-gettext \
-    php${PHP_VERSION}-ldap \
-    php${PHP_VERSION}-ctype \
-    php${PHP_VERSION}-dom \
-    php${PHP_VERSION}-simplexml \
+    php${V_PHP} \
+    php${V_PHP}-common \
+    php${V_PHP}-session \
+    php${V_PHP}-iconv \
+    php${V_PHP}-gd \
+    php${V_PHP}-curl \
+    php${V_PHP}-xml \
+    php${V_PHP}-mysqli \
+    php${V_PHP}-imap \
+    php${V_PHP}-cgi \
+    php${V_PHP}-pdo \
+    php${V_PHP}-pdo_mysql \
+    php${V_PHP}-soap \
+    php${V_PHP}-posix \
+    php${V_PHP}-gettext \
+    php${V_PHP}-ldap \
+    php${V_PHP}-ctype \
+    php${V_PHP}-dom \
+    php${V_PHP}-simplexml \
     wget
 
 WORKDIR /var/www
@@ -31,4 +31,4 @@ RUN wget https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1
 
 EXPOSE 8080
 
-CMD	[ "php", "-S", "[::]:8080", "-t", "/var/www" ]
+CMD	[ "php", "-S", "[::]:8080", "-t", "/var/www" ] #Start built-in web Server on the local address and port 8080 and specify root document to be used
