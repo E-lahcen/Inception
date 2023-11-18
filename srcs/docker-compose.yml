@@ -22,12 +22,13 @@ services:
     build:
       context: .
       dockerfile: requirements/mariadb/Dockerfile
-      args:
-        DB_NAME: ${DB_NAME}
-        USER_DB: ${USER_DB}
-        PASS_DB: ${PASS_DB}
-        DB_ROOT: ${DB_ROOT}
     container_name: mariadb
+    environment:
+      MYSQL_ROOT_PWD:   ${DB_ROOT}
+      WP_DATABASE_NAME: ${DB_NAME}
+      WP_DATABASE_USR:  ${USER_DB}
+      WP_DATABASE_PWD:  ${PASS_DB}
+
     ports:
       - "3306:3306"
     networks:
@@ -45,6 +46,7 @@ services:
         USER_DB: ${USER_DB}
         PASS_DB: ${PASS_DB}
     container_name: wordpress
+    env_file: .env
     depends_on:
       - mariadb
     restart: always
@@ -52,31 +54,31 @@ services:
       - inception
     volumes:
       - wp-volume:/var/www/
-  redis:
-    build:
-      context: .
-      dockerfile: requirements/bonus/redis/Dockerfile
-    container_name: redis
-    ports:
-      - "6379:6379"
-    networks:
-      - inception
-    restart: always
-  ftp:
-    build:
-      context: .
-      dockerfile: requirements/bonus/ftp/Dockerfile
-      args:
-        USER_FTP: ${USER_FTP}
-        PASS_FTP: ${PASS_FTP}
-    container_name: ftp
-    ports:
-      - "21:21"
-    volumes:
-      - wp-volume:/var/www/
-    networks:
-     - inception
-    restart: always
+  # redis:
+  #   build:
+  #     context: .
+  #     dockerfile: requirements/bonus/redis/Dockerfile
+  #   container_name: redis
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - inception
+  #   restart: always
+  # ftp:
+  #   build:
+  #     context: .
+  #     dockerfile: requirements/bonus/ftp/Dockerfile
+  #     args:
+  #       USER_FTP: ${USER_FTP}
+  #       PASS_FTP: ${PASS_FTP}
+  #   container_name: ftp
+  #   ports:
+  #     - "21:21"
+  #   volumes:
+  #     - wp-volume:/var/www/
+  #   networks:
+  #    - inception
+  #   restart: always
   adminer:
     build:
       context: .
@@ -90,25 +92,25 @@ services:
      - inception
     restart: always
 
-  portainer:
-    image: portainer/portainer-ce:2.11.1
-    container_name: portainer
-    restart: always
-    ports:
-     - "8000:8000"
-     - "9443:9443"
-    volumes:
-     - /var/run/docker.sock:/var/run/docker.sock
-     - portainer_data:/data
+  # portainer:
+  #   image: portainer/portainer-ce:2.11.1
+  #   container_name: portainer
+  #   restart: always
+  #   ports:
+  #    - "8000:8000"
+  #    - "9443:9443"
+  #   volumes:
+  #    - /var/run/docker.sock:/var/run/docker.sock
+  #    - portainer_data:/data
 
-  website:
-    build:
-      context: .
-      dockerfile: requirements/bonus/website/Dockerfile
-    container_name: website
-    restart: always
-    ports:
-      - "3000:3000"
+  # website:
+  #   build:
+  #     context: .
+  #     dockerfile: requirements/bonus/website/Dockerfile
+  #   container_name: website
+  #   restart: always
+  #   ports:
+  #     - "3000:3000"
 
 volumes:
   wp-volume:

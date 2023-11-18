@@ -21,3 +21,28 @@ define( 'WP_REDIS_DATABASE', 0 );
 require_once ABSPATH . 'wp-settings.php';
 EOF
 fi
+
+wget -O /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x /usr/local/bin/wp
+mkdir test-test
+# mkdir -p /run/php
+
+# chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
+
+# echo "Wordpress Download"
+
+# wp core download --allow-root
+
+# echo "Wordpress Create Config"
+
+# wp config create --dbhost=${HOST} --dbname=${DB_NAME} --dbuser=${USER_DB} --dbpass=${PASS_DB} --allow-root
+
+echo "Wordpress Install"
+
+wp core install --url=localhost --title=Inception --admin_user=lelhlami --admin_password=lelhlami --admin_email=lelhlami@student.1337.ma --allow-root
+
+echo "Wordpress Create User"
+
+wp user create  lelhlami2 lelhlami2@student.1337.ma --user_pass=lelhlami2 --role=subscriber --allow-root
+
+exec "$@"
