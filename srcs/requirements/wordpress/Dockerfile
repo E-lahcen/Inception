@@ -1,5 +1,6 @@
 FROM alpine:3.16
-ARG V_PHP=8 
+
+ARG V_PHP=8
 
 RUN apk update && apk upgrade && apk add --no-cache \
     php${V_PHP} \
@@ -37,6 +38,6 @@ RUN wget https://wordpress.org/latest.zip && \
 #     mv wp-cli.phar /usr/local/bin/wp
     
 COPY ./requirements/wordpress/conf/wp-config-create.sh .
-RUN sh wp-config-create.sh && rm wp-config-create.sh && \
-    chmod -R 0777 wp-content/
-CMD ["/usr/sbin/php-fpm8", "-F"]
+RUN chmod -R 0777 wp-content/
+    
+CMD ["sh", "wp-config-create.sh"]
